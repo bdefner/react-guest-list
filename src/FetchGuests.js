@@ -41,8 +41,13 @@ export default function FetchGuests() {
   }
 
   // needs probalby to be async:
-  function removeGuest() {
-    console.log('Remove guest function...');
+  async function removeGuest(id) {
+    console.log(guests);
+    const response = await fetch(`${baseUrl}/guests/${id}`, {
+      method: 'DELETE',
+    });
+    const deletedGuest = await response.json();
+    fetchGuests().catch(() => {});
   }
   return (
     <div>
@@ -75,7 +80,7 @@ export default function FetchGuests() {
             <h2>{guest.firstName}</h2>
             <h2>{guest.lastName}</h2>
             <input type="checkbox" checked={guest.attending ? true : false} />
-            <button onClick={() => removeGuest()}>Remove</button>
+            <button onClick={() => removeGuest(guest.id)}>Remove</button>
           </div>
         );
       })}
