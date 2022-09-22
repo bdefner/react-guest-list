@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
 const baseUrl = 'http://localhost:4000';
@@ -80,8 +81,8 @@ export default function FetchGuests() {
                   onChange={(event) => setLastName(event.currentTarget.value)}
                 />
               </div>
+              <button onClick={() => addGuest()}>+</button>
             </div>
-            <button onClick={() => addGuest()}>ADD</button>
           </form>
         </div>
       </section>
