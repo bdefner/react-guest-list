@@ -50,13 +50,13 @@ export default function FetchGuests() {
     fetchGuests().catch(() => {});
   }
 
-  async function updateGuest(id) {
+  async function updateGuest(id, attends) {
     const response = await fetch(`${baseUrl}/guests/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ attending: true }),
+      body: JSON.stringify({ attending: attends ? false : true }),
     });
     const updatedGuest = await response.json();
 
@@ -97,7 +97,7 @@ export default function FetchGuests() {
             <input
               type="checkbox"
               checked={guest.attending ? true : false}
-              onChange={() => updateGuest(guest.id)}
+              onChange={() => updateGuest(guest.id, guest.attending)}
             />
             <button onClick={() => removeGuest(guest.id)}>Remove</button>
           </div>
