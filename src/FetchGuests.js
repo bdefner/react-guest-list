@@ -5,6 +5,8 @@ const baseUrl = 'http://localhost:4000';
 
 export default function FetchGuests() {
   const [guests, setGuests] = useState([]);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
 
   async function fetchGuests() {
     const response = await fetch(`${baseUrl}/guests`);
@@ -23,8 +25,8 @@ export default function FetchGuests() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName: 'props.fName',
-        lastName: 'props.lName',
+        firstName: firstName,
+        lastName: lastName,
       }),
     });
     const createdGuest = await response.json();
@@ -39,6 +41,28 @@ export default function FetchGuests() {
   }
   return (
     <div>
+      <section>
+        <div id="form-wrap">
+          <form onSubmit={(event) => event.preventDefault()}>
+            <div className="input-wrap">
+              <div>
+                <label htmlFor="first-name-input">First name</label>
+                <input
+                  id="first-name-input"
+                  onChange={(event) => setFirstName(event.currentTarget.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="last-name-input">Last name</label>
+                <input
+                  id="last-name-input"
+                  onChange={(event) => setLastName(event.currentTarget.value)}
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
       <button onClick={() => addGuest()}>Add</button>
       {guests.map((guest) => {
         return (
