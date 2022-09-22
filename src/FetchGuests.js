@@ -49,6 +49,21 @@ export default function FetchGuests() {
     const deletedGuest = await response.json();
     fetchGuests().catch(() => {});
   }
+
+  async function updateGuest(id) {
+    const response = await fetch(`${baseUrl}/guests/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attending: true }),
+    });
+    const updatedGuest = await response.json();
+
+    console.log(id);
+
+    fetchGuests().catch(() => {});
+  }
   return (
     <div>
       <section>
@@ -79,7 +94,11 @@ export default function FetchGuests() {
           <div key={guest.id}>
             <h2>{guest.firstName}</h2>
             <h2>{guest.lastName}</h2>
-            <input type="checkbox" checked={guest.attending ? true : false} />
+            <input
+              type="checkbox"
+              checked={guest.attending ? true : false}
+              onChange={() => updateGuest(guest.id)}
+            />
             <button onClick={() => removeGuest(guest.id)}>Remove</button>
           </div>
         );
