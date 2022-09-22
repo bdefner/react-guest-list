@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { firstName, lastName } from './FetchGuests';
 
 const baseUrl = 'http://localhost:4000';
 
@@ -18,7 +17,7 @@ export default function FetchGuests() {
     fetchGuests().catch(() => {});
   }, []);
 
-  async function addGuest(props) {
+  async function addGuest() {
     const response = await fetch(`${baseUrl}/guests`, {
       method: 'POST',
       headers: {
@@ -32,21 +31,18 @@ export default function FetchGuests() {
     const createdGuest = await response.json();
     console.log(createdGuest);
 
-    const newState = [...guests];
-    console.log(`newState = ${newState}`);
-    newState.push(createdGuest[0]);
+    const newState = [createdGuest[0], ...guests];
     // setGuests(newState);
     // console.log(`guests[0] = ${guests[0]}`);
     fetchGuests().catch(() => {});
   }
 
-  // needs probalby to be async:
   async function removeGuest(id) {
     console.log(guests);
     const response = await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
     });
-    const deletedGuest = await response.json();
+    // const deletedGuest = await response.json();
     fetchGuests().catch(() => {});
   }
 
@@ -58,7 +54,7 @@ export default function FetchGuests() {
       },
       body: JSON.stringify({ attending: attends ? false : true }),
     });
-    const updatedGuest = await response.json();
+    // const updatedGuest = await response.json();
 
     console.log(id);
 
@@ -91,13 +87,14 @@ export default function FetchGuests() {
       </section>
       {guests.map((guest) => {
         return (
-          <div key={guest.id}>
+          <div key={guest.id} data-test-id="guest">
             <h2>{guest.firstName}</h2>
             <h2>{guest.lastName}</h2>
             <input
               type="checkbox"
               checked={guest.attending ? true : false}
               onChange={() => updateGuest(guest.id, guest.attending)}
+              aria-label={`${guest.firstName} ${guest.lastName}attending status`}
             />
             <button onClick={() => removeGuest(guest.id)}>Remove</button>
           </div>
