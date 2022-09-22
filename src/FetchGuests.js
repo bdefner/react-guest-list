@@ -39,6 +39,11 @@ export default function FetchGuests() {
     // console.log(`guests[0] = ${guests[0]}`);
     fetchGuests().catch(() => {});
   }
+
+  // needs probalby to be async:
+  function removeGuest() {
+    console.log('Remove guest function...');
+  }
   return (
     <div>
       <section>
@@ -60,17 +65,17 @@ export default function FetchGuests() {
                 />
               </div>
             </div>
+            <button onClick={() => addGuest()}>ADD</button>
           </form>
         </div>
       </section>
-      <button onClick={() => addGuest()}>Add</button>
       {guests.map((guest) => {
         return (
           <div key={guest.id}>
             <h2>{guest.firstName}</h2>
             <h2>{guest.lastName}</h2>
             <input type="checkbox" checked={guest.attending ? true : false} />
-            <button>Remove</button>
+            <button onClick={() => removeGuest()}>Remove</button>
           </div>
         );
       })}
