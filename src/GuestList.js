@@ -13,7 +13,7 @@ export default function FetchGuests() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
+  // const [filter, setFilter] = useState('all');
   // let attendingGuests = [];
   // let notAttendingGuests = [];
 
