@@ -32,6 +32,8 @@ export default function FetchGuests() {
     const createdGuest = await response.json();
 
     fetchGuests().catch(() => {});
+    setFirstName('');
+    setLastName('');
   }
 
   async function removeGuest(id) {
@@ -52,11 +54,24 @@ export default function FetchGuests() {
 
     fetchGuests().catch(() => {});
   }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setFirstName('');
+  //   setLastName('');
+  // };
+
   return (
     <div>
       <section>
         <div id="form-wrap">
-          <form onSubmit={(event) => event.preventDefault()}>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              // setFirstName('');
+              // setLastName('');
+            }}
+          >
             <div className="input-wrap">
               <div>
                 <label htmlFor="first-name-input">First name</label>
