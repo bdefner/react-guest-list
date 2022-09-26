@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
 const baseUrl = 'http://localhost:4000';
@@ -54,6 +53,7 @@ export default function FetchGuests() {
       method: 'DELETE',
     });
     const deletedGuest = await response.json();
+    console.log(deletedGuest);
     fetchGuests().catch(() => {});
   }
 
@@ -66,6 +66,7 @@ export default function FetchGuests() {
       body: JSON.stringify({ attending: attends ? false : true }),
     });
     const updatedGuest = await response.json();
+    console.log(updatedGuest);
 
     console.log(id);
 
