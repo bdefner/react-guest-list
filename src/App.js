@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
-import FetchGuests from './FetchGuests';
+import { css, Global } from '@emotion/react';
+// import { useEffect, useState } from 'react';
+import GuestList from './GuestList';
 
 const appWrapStyles = css`
   min-height: 100vh;
@@ -10,7 +10,7 @@ const appWrapStyles = css`
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background-color: white;
+  background-color: #333;
   padding: 100px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -26,7 +26,6 @@ const appWrapStyles = css`
   form {
     background-color: #fdfdfe;
     padding: 25px;
-    filter: drop-shadow(-7px -3px 25px #616161);
     border-radius: 5px;
 
     & .input-wrap {
@@ -54,13 +53,38 @@ const appWrapStyles = css`
       outline: 0;
     }
   }
+
+  .guest-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fdfdfe;
+    margin-top: 25px;
+    border-radius: 5px;
+    & h2 {
+      padding: 5px;
+    }
+
+    & div {
+      display: flex;
+    }
+  }
 `;
 
 function App() {
   return (
     <div css={appWrapStyles}>
+      <Global
+        styles={css`
+          body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+        `}
+      />
       <section>
-        <FetchGuests />
+        <GuestList />
       </section>
     </div>
   );

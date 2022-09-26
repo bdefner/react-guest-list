@@ -32,12 +32,12 @@ export default function FetchGuests() {
     const createdGuest = await response.json();
     console.log(createdGuest);
 
-    const newState = [createdGuest[0], ...guests];
+    // const newState = [createdGuest[0], ...guests];
     // setGuests(newState);
     // console.log(`guests[0] = ${guests[0]}`);
     fetchGuests().catch(() => {});
-    setFirstName('');
-    setLastName('');
+    // setFirstName('');
+    // setLastName('');
   }
 
   async function removeGuest(id) {
@@ -45,7 +45,7 @@ export default function FetchGuests() {
     const response = await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
     });
-    // const deletedGuest = await response.json();
+    const deletedGuest = await response.json();
     fetchGuests().catch(() => {});
   }
 
@@ -57,30 +57,24 @@ export default function FetchGuests() {
       },
       body: JSON.stringify({ attending: attends ? false : true }),
     });
-    // const updatedGuest = await response.json();
+    const updatedGuest = await response.json();
 
     console.log(id);
 
     fetchGuests().catch(() => {});
   }
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setFirstName('');
-  //   setLastName('');
-  // };
+  function handleSubmit(event) {
+    event.preventDefault();
+    // setFirstName('');
+    // setLastName('');
+  }
 
   return (
     <div>
       <section>
         <div id="form-wrap">
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              // setFirstName('');
-              // setLastName('');
-            }}
-          >
+          <form onSubmit={handleSubmit}>
             <div className="input-wrap">
               <div>
                 <label htmlFor="first-name-input">First name</label>
@@ -103,16 +97,22 @@ export default function FetchGuests() {
       </section>
       {guests.map((guest) => {
         return (
-          <div key={guest.id} data-test-id="guest">
-            <h2>{guest.firstName}</h2>
-            <h2>{guest.lastName}</h2>
-            <input
-              type="checkbox"
-              checked={guest.attending ? true : false}
-              onChange={() => updateGuest(guest.id, guest.attending)}
-              aria-label={`${guest.firstName} ${guest.lastName}attending status`}
-            />
-            <button onClick={() => removeGuest(guest.id)}>Remove</button>
+          <div key={guest.id} data-test-id="guest" className="guest-wrap">
+            <div>
+              <h2>{guest.firstName}</h2>
+              <h2>{guest.lastName}</h2>
+            </div>
+            <div>
+              <label htmlFor="attending-checkbox"> Is attending?</label>
+              <input
+                type="checkbox"
+                id="attending-checkbox"
+                checked={guest.attending ? true : false}
+                onChange={() => updateGuest(guest.id, guest.attending)}
+                aria-label={`${guest.firstName} ${guest.lastName}attending status`}
+              />
+              <button onClick={() => removeGuest(guest.id)}>Remove</button>
+            </div>
           </div>
         );
       })}
