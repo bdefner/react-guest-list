@@ -1,18 +1,25 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import LoadingScreen from './App';
 
 const baseUrl = 'http://localhost:4000';
+
+function LoadingScreen(props) {
+  if (props.isLoading) {
+    return <div id="loading-screen">Loading...</div>;
+  }
+}
 
 export default function FetchGuests() {
   const [guests, setGuests] = useState([]);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function fetchGuests() {
     const response = await fetch(`${baseUrl}/guests`);
     const allGuests = await response.json();
     setGuests(allGuests);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -98,7 +105,7 @@ export default function FetchGuests() {
           </form>
         </div>
       </section>
-      {/* <LoadingScreen guests={guests} /> */}
+      <LoadingScreen isLoading={isLoading} />
       {guests.map((guest) => {
         return (
           <div key={guest.id} data-test-id="guest" className="guest-wrap">

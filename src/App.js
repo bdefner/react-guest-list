@@ -14,6 +14,12 @@ const appWrapStyles = css`
   padding: 100px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
+  #loading-screen {
+    color: white;
+    padding: 25px;
+    text-align: center;
+  }
+
   .input-wrap {
     display: flex;
 
@@ -95,10 +101,6 @@ const appWrapStyles = css`
     }
   }
 `;
-
-function LoadingScreen(props) {
-  if (!props.guests.length) return <div>Loading...</div>;
-}
 
 function App() {
   return (
