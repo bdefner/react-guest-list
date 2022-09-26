@@ -13,6 +13,9 @@ export default function FetchGuests() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState('all');
+  // let attendingGuests = [];
+  // let notAttendingGuests = [];
 
   async function fetchGuests() {
     const response = await fetch(`${baseUrl}/guests`);
@@ -22,11 +25,27 @@ export default function FetchGuests() {
   }
 
   useEffect(() => {
-    fetchGuests().catch(() => {});
+    fetchGuests().catch(() => console.error);
   }, []);
 
+  // function updateFilter(guests) {
+  //   attendingGuests = [
+  //     ...guests.filter((guest) => {
+  //       return guest.attending === true;
+  //     }),
+  //   ];
+  //   notAttendingGuests = [
+  //     ...guests.filter((guest) => {
+  //       return guest.attending === false;
+  //     }),
+  //   ];
+  //   console.log('Attending:', attendingGuests);
+  //   console.log('Not attending:', notAttendingGuests);
+  //   console.log('Not attending length:', notAttendingGuests.length);
+  // }
+
   async function addGuest() {
-    const response = await fetch(`${baseUrl}/guests`, {
+    await fetch(`${baseUrl}/guests`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,24 +55,13 @@ export default function FetchGuests() {
         lastName: lastName,
       }),
     });
-    const createdGuest = await response.json();
-    console.log(createdGuest);
-
-    // const newState = [createdGuest[0], ...guests];
-    // setGuests(newState);
-    // console.log(`guests[0] = ${guests[0]}`);
     fetchGuests().catch(() => {});
-    // setFirstName('');
-    // setLastName('');
   }
 
   async function removeGuest(id) {
-    console.log(guests);
-    const response = await fetch(`${baseUrl}/guests/${id}`, {
+    await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
     });
-    const deletedGuest = await response.json();
-    console.log(deletedGuest);
     fetchGuests().catch(() => {});
   }
 
@@ -65,12 +73,9 @@ export default function FetchGuests() {
       },
       body: JSON.stringify({ attending: attends ? false : true }),
     });
-    const updatedGuest = await response.json();
-    console.log(updatedGuest);
+    await response.json();
 
-    console.log(id);
-
-    fetchGuests().catch(() => {});
+    fetchGuests().catch(() => console.error);
   }
 
   function handleSubmit(event) {
@@ -79,10 +84,19 @@ export default function FetchGuests() {
     setLastName('');
   }
 
+  async function deleteAll() {
+    await guests.map(async (guest) => {
+      await fetch(`${baseUrl}/guests/${guest.id}`, {
+        method: 'DELETE',
+      }).catch(() => console.error);
+    });
+    fetchGuests().catch(() => console.error);
+  }
+
   return (
     <div>
       <section>
-        <div id="form-wrap">
+        <div id="add-guest-wrap">
           <form onSubmit={handleSubmit}>
             <div className="input-wrap">
               <div>
@@ -104,6 +118,13 @@ export default function FetchGuests() {
               <button onClick={() => addGuest()}>+</button>
             </div>
           </form>
+          <div id="filter-wrap">
+            <button onClick={() => deleteAll()}>Delete all</button>
+            <p>Filter: </p>
+            <button>All ({guests.length})</button>
+            <button>Attending ({0})</button>
+            <button>Not attending ({0})</button>
+          </div>
         </div>
       </section>
       <LoadingScreen isLoading={isLoading} />

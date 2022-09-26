@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css, Global } from '@emotion/react';
-// import { useEffect, useState } from 'react';
 import GuestList from './GuestList';
 
 const appWrapStyles = css`
@@ -26,6 +25,30 @@ const appWrapStyles = css`
     & > div {
       display: flex;
       flex-direction: column;
+    }
+  }
+
+  #filter-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-top: 25px;
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+
+    & button {
+      background-color: white;
+      border: 0px;
+      padding: 8px 15px 8px 15px;
+      outline: 0;
+      cursor: pointer;
+      font-size: 700;
+    }
+
+    & p {
+      margin-left: 15px;
+      margin-right: 5px;
     }
   }
 
