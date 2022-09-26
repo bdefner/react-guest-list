@@ -30,20 +30,14 @@ export default function FetchGuests() {
       }),
     });
     const createdGuest = await response.json();
-    console.log(createdGuest);
 
-    const newState = [createdGuest[0], ...guests];
-    // setGuests(newState);
-    // console.log(`guests[0] = ${guests[0]}`);
     fetchGuests().catch(() => {});
   }
 
   async function removeGuest(id) {
-    console.log(guests);
     const response = await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
     });
-    // const deletedGuest = await response.json();
     fetchGuests().catch(() => {});
   }
 
@@ -55,9 +49,6 @@ export default function FetchGuests() {
       },
       body: JSON.stringify({ attending: attends ? false : true }),
     });
-    // const updatedGuest = await response.json();
-
-    console.log(id);
 
     fetchGuests().catch(() => {});
   }
