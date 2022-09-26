@@ -28,14 +28,21 @@ const appWrapStyles = css`
     padding: 25px;
     border-radius: 5px;
 
+    & > label {
+      font-size: 10px;
+    }
+
     & .input-wrap {
       padding: 5px;
       border: solid 2px #e5e5e7;
       border-radius: 5px;
+      display: flex;
+      align-items: center;
     }
 
     & input {
       border: 0px;
+      font-size: 20px;
     }
 
     & button {
@@ -45,9 +52,7 @@ const appWrapStyles = css`
       width: 30px;
       font-size: 20px;
       font-weight: 900;
-      background-color: FFD359;
-      background-image: FFD359;
-      background: FFD359;
+      background-color: #ffd359;
       color: whitesmoke;
       cursor: pointer;
       outline: 0;
@@ -67,9 +72,33 @@ const appWrapStyles = css`
 
     & div {
       display: flex;
+      margin-right: 25px;
+
+      & #attending-wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    & button {
+      border: 0px;
+      border-radius: 50%;
+      height: 30px;
+      width: 30px;
+      font-size: 20px;
+      font-weight: 900;
+      background-color: #eb7c7d;
+      color: whitesmoke;
+      cursor: pointer;
+      outline: 0;
     }
   }
 `;
+
+function LoadingScreen(props) {
+  if (!props.guests.length) return <div>Loading...</div>;
+}
 
 function App() {
   return (

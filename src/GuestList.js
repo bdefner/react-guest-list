@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import LoadingScreen from './App';
 
 const baseUrl = 'http://localhost:4000';
 
@@ -66,8 +67,8 @@ export default function FetchGuests() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // setFirstName('');
-    // setLastName('');
+    setFirstName('');
+    setLastName('');
   }
 
   return (
@@ -81,6 +82,7 @@ export default function FetchGuests() {
                 <input
                   id="first-name-input"
                   onChange={(event) => setFirstName(event.currentTarget.value)}
+                  value={firstName}
                 />
               </div>
               <div>
@@ -88,6 +90,7 @@ export default function FetchGuests() {
                 <input
                   id="last-name-input"
                   onChange={(event) => setLastName(event.currentTarget.value)}
+                  value={lastName}
                 />
               </div>
               <button onClick={() => addGuest()}>+</button>
@@ -95,6 +98,7 @@ export default function FetchGuests() {
           </form>
         </div>
       </section>
+      {/* <LoadingScreen guests={guests} /> */}
       {guests.map((guest) => {
         return (
           <div key={guest.id} data-test-id="guest" className="guest-wrap">
@@ -103,15 +107,19 @@ export default function FetchGuests() {
               <h2>{guest.lastName}</h2>
             </div>
             <div>
-              <label htmlFor="attending-checkbox"> Is attending?</label>
-              <input
-                type="checkbox"
-                id="attending-checkbox"
-                checked={guest.attending ? true : false}
-                onChange={() => updateGuest(guest.id, guest.attending)}
-                aria-label={`${guest.firstName} ${guest.lastName}attending status`}
-              />
-              <button onClick={() => removeGuest(guest.id)}>Remove</button>
+              <div id="attending-wrap">
+                <label htmlFor="attending-checkbox"> Is attending?</label>
+                <input
+                  type="checkbox"
+                  id="attending-checkbox"
+                  checked={guest.attending ? true : false}
+                  onChange={() => updateGuest(guest.id, guest.attending)}
+                  aria-label={`${guest.firstName} ${guest.lastName}attending status`}
+                />
+              </div>
+              <button onClick={() => removeGuest(guest.id)} aria-label="Remove">
+                —
+              </button>
             </div>
           </div>
         );
