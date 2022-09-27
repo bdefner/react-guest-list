@@ -13,6 +13,9 @@ export default function FetchGuests() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  // variables for disabled Filter function:
+
   // const [filter, setFilter] = useState('all');
   // let attendingGuests = [];
   // let notAttendingGuests = [];
@@ -27,8 +30,12 @@ export default function FetchGuests() {
   useEffect(() => {
     fetchGuests().catch(() => console.error);
   }, []);
+  // Filter function is unfinished and disabled:
 
   // function updateFilter(guests) {
+  //   console.log('Attending:', attendingGuests);
+  //   console.log('Not attending:', notAttendingGuests);
+  //   console.log('Not attending length:', notAttendingGuests.length);
   //   attendingGuests = [
   //     ...guests.filter((guest) => {
   //       return guest.attending === true;
@@ -39,10 +46,9 @@ export default function FetchGuests() {
   //       return guest.attending === false;
   //     }),
   //   ];
-  //   console.log('Attending:', attendingGuests);
-  //   console.log('Not attending:', notAttendingGuests);
-  //   console.log('Not attending length:', notAttendingGuests.length);
   // }
+
+  // Adding new guest:
 
   async function addGuest() {
     await fetch(`${baseUrl}/guests`, {
@@ -56,14 +62,20 @@ export default function FetchGuests() {
       }),
     });
     fetchGuests().catch(() => {});
+    // updateFilter(guests);
   }
+
+  // Removing a guest:
 
   async function removeGuest(id) {
     await fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
     });
     fetchGuests().catch(() => {});
+    // updateFilter(guests);
   }
+
+  // Update attending status of one guest:
 
   async function updateGuest(id, attends) {
     const response = await fetch(`${baseUrl}/guests/${id}`, {
@@ -76,13 +88,18 @@ export default function FetchGuests() {
     await response.json();
 
     fetchGuests().catch(() => console.error);
+    // updateFilter(guests);
   }
+
+  // Call on form submit:
 
   function handleSubmit(event) {
     event.preventDefault();
     setFirstName('');
     setLastName('');
   }
+
+  // Delete all guests:
 
   async function deleteAll() {
     await guests.map(async (guest) => {
