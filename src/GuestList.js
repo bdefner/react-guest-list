@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const baseUrl = 'http://localhost:4000';
+const baseUrl = 'https://28f51e24-1fa9-4952-9b77-09213d1f0356.id.repl.co';
 
 function LoadingScreen(props) {
   if (props.isLoading) {
