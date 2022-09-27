@@ -160,7 +160,7 @@ export default function FetchGuests() {
                   id="attending-checkbox"
                   checked={guest.attending ? true : false}
                   onChange={() => updateGuest(guest.id, guest.attending)}
-                  aria-label={`${guest.firstName} ${guest.lastName}attending status`}
+                  aria-label={`${guest.id} attending status`}
                 />
               </div>
               <button onClick={() => removeGuest(guest.id)} aria-label="Remove">
